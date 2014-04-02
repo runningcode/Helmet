@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              style="?android:attr/buttonBarStyle"
+              tools:context="com.sebastian.helmet.MainActivity$PlaceholderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
+        >
+
+        <Button
+            android:text="@string/flbutton"
+            android:id="@+id/button1"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+
+        <Button
+            android:text="@string/frbutton"
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
+        >
+
+        <Button
+            android:text="@string/blbutton"
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+
+        <Button
+            android:text="@string/brbutton"
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+    </LinearLayout>
+
+    <Button
+        android:text="@string/stop"
+        android:id="@+id/stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:enabled="false"
+        style="?android:attr/buttonBarButtonStyle"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            />
+
+    </ScrollView>
+
+
+</LinearLayout>
