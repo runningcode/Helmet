@@ -1,6 +1,7 @@
 package com.sebastian.helmet;
 
 import android.bluetooth.BluetoothSocket;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,7 @@ public class BluetoothFragment extends Fragment {
     private InputStream inputStream = null;
     private Handler handler = new Handler();
     private TextView textView;
-    private boolean stopWorker = false;
+    private boolean run = false;
     private boolean connected = false;
 
     private Button button1;
@@ -85,43 +86,60 @@ public class BluetoothFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        beginListenForData();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
+        run = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        run = false;
         Utils.closeBluetoothConnection(btSocket);
-        connected = false;
-        enableButtons(connected);
+        //TODO: Double check that this works!
+        enableButtons(connected = false);
     }
 
     public void beginListenForData()   {
+        if (btSocket == null || !btSocket.isConnected()) {
+            return;
+        }
+        run = true;
         try {
             inputStream = btSocket.getInputStream();
+            Thread workerThread = new Thread(new Runnable() {
+                public void run() {
+                    while(!Thread.currentThread().isInterrupted() && run) {
+                        try {
+                            BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
+                            final String line = rd.readLine();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textView.append(line);
+                                }
+                            });
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                            run = false;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            run = false;
+                        }
+                    }
+                }
+            });
+            workerThread.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Thread workerThread = new Thread(new Runnable() {
-            public void run() {
-                while(!Thread.currentThread().isInterrupted() && !stopWorker) {
-                    try {
-                        BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
-                        final String line = rd.readLine();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                textView.append(line);
-                            }
-                        });
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        stopWorker = true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        stopWorker = true;
-                    }
-                }
-            }
-        });
-        workerThread.start();
     }
 
     private void enableButtons(boolean enable) {
@@ -141,11 +159,27 @@ public class BluetoothFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.blue_connect:
-                btSocket = Utils.connect();
-                if (btSocket.isConnected()) {
-                    connected = true;
-                    enableButtons(true);
-                    beginListenForData();
+                if (!connected) {
+                    new AsyncTask<Void, Void, BluetoothSocket>() {
+
+                        @Override
+                        protected BluetoothSocket doInBackground(Void... params) {
+                            return Utils.connect();
+                        }
+
+                        @Override
+                        protected void onPostExecute(BluetoothSocket bluetoothSocket) {
+                            btSocket = bluetoothSocket;
+                            if (btSocket != null && btSocket.isConnected()) {
+                                connected = true;
+                                beginListenForData();
+                            } else {
+                                connected = false;
+                                run = false;
+                            }
+                            enableButtons(connected);
+                        }
+                    }.execute();
                 }
                 return true;
             default:
