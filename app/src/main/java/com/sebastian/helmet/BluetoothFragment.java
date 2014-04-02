@@ -1,12 +1,9 @@
 package com.sebastian.helmet;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,22 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.UUID;
 
 public class BluetoothFragment extends Fragment {
 
-    private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothSocket btSocket = null;
     private InputStream inputStream = null;
-    private OutputStream outputStream = null;
     private Handler handler = new Handler();
     private TextView textView;
     private boolean stopWorker = false;
@@ -42,9 +34,7 @@ public class BluetoothFragment extends Fragment {
     private Button button4;
     private Button stop;
 
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private static final String MAC = "00:14:01:10:27:57";
-    //private static final String MAC = "00:14:01:14:33:82";
+
     private static final String TAG = "BluetoothFragment";
 
     @Override
@@ -91,7 +81,6 @@ public class BluetoothFragment extends Fragment {
                 Utils.writeData("q", btSocket);
             }
         });
-        checkBt();
         return rootView;
     }
 
@@ -101,38 +90,6 @@ public class BluetoothFragment extends Fragment {
         Utils.closeBluetoothConnection(btSocket);
         connected = false;
         enableButtons(connected);
-    }
-
-    private void checkBt() {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            Toast.makeText(getActivity(),
-                    "Bluetooth null !", Toast.LENGTH_SHORT)
-                    .show();
-        } else if (!mBluetoothAdapter.isEnabled()) {
-            Toast.makeText(getActivity(), "Bluetooth Disabled !",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void connect() {
-        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(MAC);
-        Log.d("", "Connecting to ... " + device);
-        mBluetoothAdapter.cancelDiscovery();
-        try {
-            btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-            btSocket.connect();
-            connected = true;
-            enableButtons(connected);
-            Log.d("", "Connection made.");
-        } catch (IOException e) {
-            Utils.closeBluetoothConnection(btSocket);
-            connected = false;
-            enableButtons(connected);
-            Log.d("", "Socket creation failed");
-        }
-        beginListenForData();
-        /* this is a method used to read what the Arduino says for example when you write Serial.print("Hello world.") in your Arduino code */
     }
 
     public void beginListenForData()   {
@@ -184,7 +141,12 @@ public class BluetoothFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.blue_connect:
-                connect();
+                btSocket = Utils.connect();
+                if (btSocket.isConnected()) {
+                    connected = true;
+                    enableButtons(true);
+                    beginListenForData();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
