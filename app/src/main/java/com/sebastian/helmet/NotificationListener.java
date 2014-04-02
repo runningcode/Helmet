@@ -35,6 +35,9 @@ public class NotificationListener extends NotificationListenerService {
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-
+        if (sbn.getPackageName().equals("com.google.android.apps.maps")) {
+            Intent intent = new Intent(this, BluetoothConnectionService.class);
+            stopService(intent);
+        }
     }
 }

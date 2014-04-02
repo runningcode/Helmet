@@ -30,6 +30,11 @@ public class BluetoothConnectionService extends Service {
         if (intent.getExtras() != null) {
             Boolean right = (Boolean) intent.getExtras().get("right");
             Log.i(TAG, "right is " + right);
+            if (right) {
+                Utils.writeData("R", bluetoothSocket);
+            } else {
+                Utils.writeData("L", bluetoothSocket);
+            }
         }
         return Service.START_NOT_STICKY;
     }

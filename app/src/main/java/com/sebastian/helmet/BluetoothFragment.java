@@ -128,9 +128,11 @@ public class BluetoothFragment extends Fragment {
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                             run = false;
+                            enableButtons(connected = false);
                         } catch (IOException e) {
                             e.printStackTrace();
                             run = false;
+                            enableButtons(connected = false);
                         }
                     }
                 }
