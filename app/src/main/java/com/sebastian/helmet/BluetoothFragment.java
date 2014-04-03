@@ -1,5 +1,6 @@
 package com.sebastian.helmet;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -163,6 +164,14 @@ public class BluetoothFragment extends Fragment {
             case R.id.blue_connect:
                 if (!connected) {
                     new AsyncTask<Void, Void, BluetoothSocket>() {
+                        ProgressDialog progressDialog;
+
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            progressDialog = ProgressDialog.show(getActivity(), "", "Connecting...");
+
+                        }
 
                         @Override
                         protected BluetoothSocket doInBackground(Void... params) {
@@ -180,6 +189,7 @@ public class BluetoothFragment extends Fragment {
                                 run = false;
                             }
                             enableButtons(connected);
+                            progressDialog.cancel();
                         }
                     }.execute();
                 }
