@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="bliss"
+        android:title="Blind Spot Warning"
+        android:defaultValue="true"
+        android:summaryOn="Blind Spot Warning is on"
+        android:summaryOff="Blind Spot Warning is off"
+        />
+
+    <PreferenceScreen
+        android:key="blisssettings"
+        android:title="Blind Spot Warning Settings"
+        android:summary="Change Blind Spot Warning Settings"
+        android:dependency="bliss"
+        >
+        <ListPreference
+            android:key="pref_bliss_color"
+            android:title="Light Color"
+            android:dialogTitle="Bind spot warning light color"
+            android:entries="@array/colors_array"
+            android:entryValues="@array/colors_array"
+            android:defaultValue="red"
+            />
+
+        <ListPreference
+            android:key="pref_bliss_strength"
+            android:title="Vibration strength"
+            android:dialogTitle="Bind spot warning vibration strength"
+            android:entries="@array/vib_strength"
+            android:entryValues="@array/vib_strength"
+            android:defaultValue="medium"
+            />
+
+        <ListPreference
+            android:key="pref_bliss_type"
+            android:title="Vibration type"
+            android:dialogTitle="Bind spot warning vibration type"
+            android:entries="@array/vib_type"
+            android:entryValues="@array/vib_type"
+            android:defaultValue="zip"
+            />
+
+        <ListPreference
+            android:key="pref_bliss_sens"
+            android:title="Sensitivity of sensor"
+            android:dialogTitle="Bind spot warning sensor sensitivity"
+            android:entries="@array/vib_type"
+            android:entryValues="@array/vib_type"
+            android:defaultValue="zip"
+            />
+
+    </PreferenceScreen>
+
+    <SwitchPreference
+        android:key="turn_signal_sync"
+        android:title="Turn signal sync"
+        android:defaultValue="true"
+        android:summaryOn="Turn signal sync is on"
+        android:summaryOff="Turn signal sync is off"
+        />
+
+    <PreferenceScreen
+        android:key="pref_turn_signal"
+        android:title="Turn signal settings"
+        android:summary="Change turn signal settings"
+        android:dependency="turn_signal_sync"
+        >
+        <ListPreference
+            android:key="pref_turn_color"
+            android:title="Light Color"
+            android:dialogTitle="Turn signal light color"
+            android:entries="@array/colors_array"
+            android:entryValues="@array/colors_array"
+            android:defaultValue="red"
+            />
+
+        <ListPreference
+            android:key="pref_turn_strength"
+            android:title="Vibration strength"
+            android:dialogTitle="Turn signal vibration strength"
+            android:entries="@array/vib_strength"
+            android:entryValues="@array/vib_strength"
+            android:defaultValue="medium"
+            />
+
+        <ListPreference
+            android:key="pref_turn_type"
+            android:title="Vibration type"
+            android:dialogTitle="Turn signal vibration type"
+            android:entries="@array/vib_type"
+            android:entryValues="@array/vib_type"
+            android:defaultValue="zip"
+            />
+
+    </PreferenceScreen>
+
+    <SwitchPreference
+        android:key="nav sync"
+        android:title="Navigation sync"
+        android:defaultValue="true"
+        android:summaryOn="Turn signal sync is on"
+        android:summaryOff="Turn signal sync is off"
+        />
+
+    <PreferenceScreen
+        android:key="nav_settings"
+        android:title="Navigation Settings"
+        android:summary="Change Navigation Settings"
+        android:dependency=""
+        >
+
+        <ListPreference
+            android:key="pref_nav_strength"
+            android:title="Vibration strength"
+            android:dialogTitle="Navigation vibration strength"
+            android:entries="@array/vib_strength"
+            android:entryValues="@array/vib_strength"
+            android:defaultValue="medium"
+            />
+
+        <ListPreference
+            android:key="pref_nav_type"
+            android:title="Vibration type"
+            android:dialogTitle="Navigation vibration type"
+            android:entries="@array/vib_type"
+            android:entryValues="@array/vib_type"
+            android:defaultValue="zip"
+            />
+
+    </PreferenceScreen>
+
+
+
+</PreferenceScreen>

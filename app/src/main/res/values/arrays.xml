@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colors_array">
+        <item name="blue">Red</item>
+        <item name="orange">Orange</item>
+        <item name="yellow">Yellow</item>
+        <item name="blue">Blue</item>
+        <item name="green">Green</item>
+    </string-array>
+
+    <string-array name="vib_strength">
+        <item name="weak">Weak</item>
+        <item name="medium">Medium</item>
+        <item name="strong">Strong</item>
+    </string-array>
+
+    <string-array name="vib_type">
+        <item name="Zip">zip</item>
+        <item name="Zop">zop</item>
+        <item name="Zoop">zoop</item>
+    </string-array>
+
+</resources>

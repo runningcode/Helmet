@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-public class BluetoothFragment extends Fragment {
+public class BluetoothFragment extends NavigationSectionFragment {
 
     private BluetoothSocket btSocket = null;
     private InputStream inputStream = null;
@@ -42,7 +41,7 @@ public class BluetoothFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_test, container, false);
         textView = (TextView) rootView.findViewById(R.id.text);
         setHasOptionsMenu(true);
 
