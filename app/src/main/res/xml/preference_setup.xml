@@ -97,7 +97,7 @@
     </PreferenceScreen>
 
     <SwitchPreference
-        android:key="nav sync"
+        android:key="nav_sync"
         android:title="Navigation sync"
         android:defaultValue="true"
         android:summaryOn="Turn signal sync is on"
@@ -108,7 +108,7 @@
         android:key="nav_settings"
         android:title="Navigation Settings"
         android:summary="Change Navigation Settings"
-        android:dependency=""
+        android:dependency="nav_sync"
         >
 
         <ListPreference

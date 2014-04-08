@@ -64,14 +64,10 @@
             />
     </LinearLayout>
 
-    <Button
-        android:text="@string/stop"
-        android:id="@+id/stop"
+    <SeekBar
+        android:id="@+id/seek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:enabled="false"
-        style="?android:attr/buttonBarButtonStyle"
         />
 
     <ScrollView

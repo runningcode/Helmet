@@ -11,11 +11,9 @@ import android.widget.Button;
 
 public class SetupFragment extends NavigationSectionFragment {
 
-
     private Button button1;
     private Button button2;
     private Button button3;
-
 
     private static final String TAG = "SetupFragment";
 

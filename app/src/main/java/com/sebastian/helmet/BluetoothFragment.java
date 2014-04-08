@@ -9,10 +9,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +36,7 @@ public class BluetoothFragment extends NavigationSectionFragment {
     private Button button2;
     private Button button3;
     private Button button4;
-    private Button stop;
+    private SeekBar seekBar;
 
 
     private static final String TAG = "BluetoothFragment";
@@ -49,37 +52,84 @@ public class BluetoothFragment extends NavigationSectionFragment {
         button2 = (Button) rootView.findViewById(R.id.button2);
         button3 = (Button) rootView.findViewById(R.id.button3);
         button4 = (Button) rootView.findViewById(R.id.button4);
-        stop = (Button) rootView.findViewById(R.id.stop);
+        seekBar = (SeekBar) rootView.findViewById(R.id.seek);
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        button1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Utils.writeData("L", btSocket);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        Utils.writeData("q", btSocket);
+                        return true;
+                }
+                return false;
+            }
+        });
+        button2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Utils.writeData("R", btSocket);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        Utils.writeData("q", btSocket);
+                        return true;
+                }
+                return false;
+            }
+        });
+        button3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                 switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Utils.writeData("B", btSocket);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        Utils.writeData("q", btSocket);
+                        return true;
+                }
+                return false;
+            }
+        });
+        button4.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                 switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Utils.writeData("C", btSocket);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        Utils.writeData("q", btSocket);
+                        return true;
+                 }
+                 return false;
+            }
+        });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            private int progress;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                this.progress = progress;
+            }
 
             @Override
-            public void onClick(View v) {
-                Utils.writeData("L", btSocket);
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
             }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Utils.writeData("R", btSocket);
-            }
-        });
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.writeData("B", btSocket);
-            }
-        });
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.writeData("C", btSocket);
-            }
-        });
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Utils.writeData("q", btSocket);
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (btSocket != null) {
+                    Utils.writeData((byte) (progress * 2.55), btSocket);
+                }
+                Toast.makeText(getActivity(), "Value is " + progress, Toast.LENGTH_SHORT).show();
+
             }
         });
         return rootView;
@@ -88,7 +138,7 @@ public class BluetoothFragment extends NavigationSectionFragment {
     @Override
     public void onResume() {
         super.onResume();
-        beginListenForData();
+        //beginListenForData();
     }
 
     @Override
@@ -149,7 +199,6 @@ public class BluetoothFragment extends NavigationSectionFragment {
         button2.setEnabled(enable);
         button3.setEnabled(enable);
         button4.setEnabled(enable);
-        stop.setEnabled(enable);
     }
 
     @Override
@@ -182,7 +231,7 @@ public class BluetoothFragment extends NavigationSectionFragment {
                             btSocket = bluetoothSocket;
                             if (btSocket != null && btSocket.isConnected()) {
                                 connected = true;
-                                beginListenForData();
+                                //beginListenForData();
                             } else {
                                 connected = false;
                                 run = false;

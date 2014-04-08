@@ -15,9 +15,9 @@
     </string-array>
 
     <string-array name="vib_type">
-        <item name="Zip">zip</item>
-        <item name="Zop">zop</item>
-        <item name="Zoop">zoop</item>
+        <item name="zip">Zip</item>
+        <item name="zop">Zop</item>
+        <item name="zoop">Zoop</item>
     </string-array>
 
 </resources>

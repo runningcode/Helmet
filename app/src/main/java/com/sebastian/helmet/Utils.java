@@ -52,4 +52,12 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public static void writeData(Byte data, BluetoothSocket btSocket) {
+        try {
+            btSocket.getOutputStream().write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -20,6 +21,8 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private CharSequence mTitle;
+    private boolean connected;
+    private BluetoothSocket btSocket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
 
     @Override
@@ -119,7 +121,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.blue_menu, menu);
             restoreActionBar();
             return true;
         }
@@ -131,9 +133,39 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            /*case R.id.blue_connect:
+                if (!connected) {
+                    new AsyncTask<Void, Void, BluetoothSocket>() {
+                        ProgressDialog progressDialog;
+
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            progressDialog = ProgressDialog.show(MainActivity.this, "", "Connecting...");
+
+                        }
+
+                        @Override
+                        protected BluetoothSocket doInBackground(Void... params) {
+                            return Utils.connect();
+                        }
+
+                        @Override
+                        protected void onPostExecute(BluetoothSocket bluetoothSocket) {
+                            btSocket = bluetoothSocket;
+                            if (btSocket != null && btSocket.isConnected()) {
+                                connected = true;
+                            } else {
+                                connected = false;
+                            }
+                            progressDialog.cancel();
+                        }
+                    }.execute();
+                }
+                return true;*/
         }
         return super.onOptionsItemSelected(item);
     }
