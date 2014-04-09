@@ -45,19 +45,23 @@ public class Utils {
         }
     }
 
-    public static void writeData(String data, BluetoothSocket btSocket) {
+    public static boolean writeData(String data, BluetoothSocket btSocket) {
         try {
             btSocket.getOutputStream().write(data.getBytes());
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public static void writeData(Byte data, BluetoothSocket btSocket) {
+    public static boolean writeData(Byte data, BluetoothSocket btSocket) {
         try {
             btSocket.getOutputStream().write(data);
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

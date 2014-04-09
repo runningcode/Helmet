@@ -83,5 +83,79 @@
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
+        >
+
+        <Button
+            android:text="@string/pulse"
+            android:id="@+id/pulse"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+
+        <Button
+            android:text="@string/sawtooth"
+            android:id="@+id/sawtooth"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+
+        <Button
+            android:text="@string/turn_signal"
+            android:id="@+id/turnsignal"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
+        >
+
+        <Button
+            android:text="@string/sinusoid"
+            android:id="@+id/sin"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+
+        <Button
+            android:text="Fast Pulse"
+            android:id="@+id/stuff"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+
+        <Button
+            android:text="Default"
+            android:id="@+id/stuff2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            style="?android:attr/buttonBarButtonStyle"
+            />
+    </LinearLayout>
+
 
 </LinearLayout>

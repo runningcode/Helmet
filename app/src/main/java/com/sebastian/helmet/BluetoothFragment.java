@@ -36,6 +36,12 @@ public class BluetoothFragment extends NavigationSectionFragment {
     private Button button2;
     private Button button3;
     private Button button4;
+    private Button pulse;
+    private Button sawtooth;
+    private Button turn;
+    private Button sin;
+    private Button extra;
+    private Button extra2;
     private SeekBar seekBar;
 
 
@@ -53,16 +59,23 @@ public class BluetoothFragment extends NavigationSectionFragment {
         button3 = (Button) rootView.findViewById(R.id.button3);
         button4 = (Button) rootView.findViewById(R.id.button4);
         seekBar = (SeekBar) rootView.findViewById(R.id.seek);
+        pulse = (Button) rootView.findViewById(R.id.pulse);
+        sawtooth = (Button) rootView.findViewById(R.id.sawtooth);
+        turn = (Button) rootView.findViewById(R.id.turnsignal);
+        sin = (Button) rootView.findViewById(R.id.sin);
+        extra = (Button) rootView.findViewById(R.id.stuff);
+        extra2 = (Button) rootView.findViewById(R.id.stuff2);
+
 
         button1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Utils.writeData("L", btSocket);
+                        checkConnection("L");
                         return true;
                     case MotionEvent.ACTION_UP:
-                        Utils.writeData("q", btSocket);
+                        checkConnection("q");
                         return true;
                 }
                 return false;
@@ -73,10 +86,10 @@ public class BluetoothFragment extends NavigationSectionFragment {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Utils.writeData("R", btSocket);
+                        checkConnection("R");
                         return true;
                     case MotionEvent.ACTION_UP:
-                        Utils.writeData("q", btSocket);
+                        checkConnection("q");
                         return true;
                 }
                 return false;
@@ -87,10 +100,10 @@ public class BluetoothFragment extends NavigationSectionFragment {
             public boolean onTouch(View v, MotionEvent event) {
                  switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Utils.writeData("B", btSocket);
+                        checkConnection("B");
                         return true;
                     case MotionEvent.ACTION_UP:
-                        Utils.writeData("q", btSocket);
+                        checkConnection("q");
                         return true;
                 }
                 return false;
@@ -101,18 +114,61 @@ public class BluetoothFragment extends NavigationSectionFragment {
             public boolean onTouch(View v, MotionEvent event) {
                  switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Utils.writeData("C", btSocket);
+                        checkConnection("C");
                         return true;
                     case MotionEvent.ACTION_UP:
-                        Utils.writeData("q", btSocket);
+                        checkConnection("q");
                         return true;
                  }
                  return false;
             }
         });
 
+        pulse.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                checkConnection("p");
+            }
+        });
+        sawtooth.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                checkConnection("T");
+            }
+        });
+        turn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                checkConnection("t");
+            }
+        });
+        sin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                checkConnection("s");
+            }
+        });
+        extra.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                checkConnection("f");
+            }
+        });
+        extra2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                checkConnection("d");
+            }
+        });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             private int progress;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 this.progress = progress;
@@ -129,10 +185,16 @@ public class BluetoothFragment extends NavigationSectionFragment {
                     Utils.writeData((byte) (progress * 2.55), btSocket);
                 }
                 Toast.makeText(getActivity(), "Value is " + progress, Toast.LENGTH_SHORT).show();
-
             }
         });
         return rootView;
+    }
+
+    private void checkConnection(String data) {
+        if (!Utils.writeData(data, btSocket)) {
+            connected = false;
+            enableButtons(false);
+        }
     }
 
     @Override
@@ -142,8 +204,8 @@ public class BluetoothFragment extends NavigationSectionFragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         run = false;
     }
 
@@ -199,6 +261,12 @@ public class BluetoothFragment extends NavigationSectionFragment {
         button2.setEnabled(enable);
         button3.setEnabled(enable);
         button4.setEnabled(enable);
+        pulse.setEnabled(enable);
+        turn.setEnabled(enable);
+        sawtooth.setEnabled(enable);
+        sin.setEnabled(enable);
+        extra.setEnabled(enable);
+        extra2.setEnabled(enable);
     }
 
     @Override

@@ -15,5 +15,9 @@
     <string name="blbutton">Back Left</string>
     <string name="brbutton">Back Right</string>
     <string name="stop">Stop</string>
+    <string name="sinusoid">Sinusoid</string>
+    <string name="turn_signal">Turn Signal</string>
+    <string name="sawtooth">Sawtooth</string>
+    <string name="pulse">Pulse</string>
 
 </resources>
